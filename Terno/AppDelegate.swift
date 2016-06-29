@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseStorage
+import FirebaseDatabase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +20,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
+		
+		FIRApp.configure()
+		
+		FIRAuth.auth()?.signInWithEmail("ramonpans13@gmail.com", password: "testPass13") {
+			(user, error) in
+			if let user = user {
+				// User is signed in.
+				Global.email = user.email!
+				Global.uid = user.uid
+				Global.username = "Test Username"
+				print("User with email \(Global.email) logged in!")
+			} else {
+				print("Unable to log in")
+			}
+
+			Global.storage = FIRStorage.storage()
+			Global.databaseRef = FIRDatabase.database().reference()
+			
+			Global.databaseRef!.child("users/\(Global.uid)/username").setValue(Global.username)
+			Global.databaseRef!.child("users/\(Global.uid)/email").setValue(Global.email)
+		}
+		
 		return true
 	}
 
