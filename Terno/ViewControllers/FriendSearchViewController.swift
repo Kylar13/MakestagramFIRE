@@ -31,11 +31,11 @@ class FriendSearchViewController: UIViewController {
 		didSet {
 			switch (state) {
 			case .DefaultMode:
-				FirebaseHelper.allUsers(updateList)
+				FirebaseHelper.first20Users(updateList)
 				
 			case .SearchMode:
 				let searchText = searchBar?.text ?? ""
-				FirebaseHelper.searchUsers(searchText, matches: [], completitionBlock: updateList)
+				FirebaseHelper.searchUsers(searchText, matches: [], completionBlock: updateList)
 			}
 		}
 	}
@@ -128,7 +128,7 @@ extension FriendSearchViewController: UISearchBarDelegate {
 	}
 	
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		FirebaseHelper.searchUsers(searchText, matches: [], completitionBlock: updateList)
+		FirebaseHelper.searchUsers(searchText, matches: [], completionBlock: updateList)
 	}
 	
 }
