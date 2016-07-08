@@ -95,7 +95,8 @@ class Post: NSObject {
 
 		//If the image is not in our cache, download it
 		if imageData.value == nil {
-
+			
+			//print("Redownload")
 			//Get the data stored inside the post's "path"
 			Global.storage!.referenceWithPath(path).dataWithMaxSize(INT64_MAX) { (data, error) in
 				if let data = data{

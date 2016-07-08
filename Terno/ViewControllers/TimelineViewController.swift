@@ -37,11 +37,6 @@ class TimelineViewController: UIViewController {
 		FirebaseHelper.timelineQuery() { (timelinePosts: [Post]) in
 			
 			self.posts = timelinePosts
-			//print("Post count is \(self.posts.count)")
-			if self.posts.count > 0 {
-				self.posts[0].downloadImage(self.posts[0].imagePath)
-				self.posts[0].fetchLikes()
-			}
 			self.tableView.reloadData()
 		}
 	
@@ -84,6 +79,9 @@ extension TimelineViewController: UITableViewDataSource {
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		// 2
 		let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
+		
+		self.posts[indexPath.row].downloadImage(self.posts[indexPath.row].imagePath)
+		self.posts[indexPath.row].fetchLikes()
 		
 		if indexPath.row < posts.count - 1 {
 			

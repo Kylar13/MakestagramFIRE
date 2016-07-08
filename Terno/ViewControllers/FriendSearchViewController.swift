@@ -35,7 +35,7 @@ class FriendSearchViewController: UIViewController {
 				
 			case .SearchMode:
 				let searchText = searchBar?.text ?? ""
-				FirebaseHelper.searchUsers(searchText, matches: [], completionBlock: updateList)
+				FirebaseHelper.searchUsers(searchText, completionBlock: updateList)
 			}
 		}
 	}
@@ -87,6 +87,8 @@ extension FriendSearchViewController: UITableViewDataSource {
 			//Check if current user is already following displayed user in order to change the button appearance
 			cell.canFollow = true
 			
+			//print("The follower array contains \(followingUsers.count) users")
+			
 			for item in followingUsers {
 				if item.key == user.key {
 					cell.canFollow = false
@@ -115,7 +117,7 @@ extension FriendSearchViewController: UISearchBarDelegate {
 	}
 	
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		FirebaseHelper.searchUsers(searchText, matches: [], completionBlock: updateList)
+		FirebaseHelper.searchUsers(searchText, completionBlock: updateList)
 	}
 	
 }

@@ -89,7 +89,7 @@ class FirebaseHelper {
 		var posts: [Post] = []
 		
 		//Get all the post keys from the user's post list
-		Global.databaseRef?.child("users").child(userKey).child("posts").observeSingleEventType(.Value) { (snapshot: FIRDataSnapshot) in
+		Global.databaseRef?.child("users").child(userKey).child("posts").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 
 			//We create a dispatch group in order to be able to wait for all posts to finish downloading
 			let waitForAllPosts = dispatch_group_create()
@@ -104,7 +104,7 @@ class FirebaseHelper {
 				//Enter the dispatch group (Start of a new post's download)
 				dispatch_group_enter(waitForAllPosts)
 				
-				Global.databaseRef?.child("posts").child(data.key).observeSingleEventType(.Value) { (snapshot: FIRDataSnapshot) in
+				Global.databaseRef?.child("posts").child(data.key).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 
 					//Create a Post object and store all the values from our query
 					let post = Post()
@@ -141,12 +141,13 @@ class FirebaseHelper {
 	static func getFollowedUsers(userKey: String, completionBlock: ([User]) -> Void) {
 
 		//Get the keys from the users the given user (userKey) follows
-		Global.databaseRef?.child("follows").child(userKey).observeSingleEventType(.Value) { (snapshot: FIRDataSnapshot) in
+		Global.databaseRef?.child("follows").child(userKey).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 			
 			var followUserKeys: [User] = []
 
 			//We create a dispatch group in order to be able to wait for all the usernames to download (We store only the keys in the "follows" tree)
 			let waitForUsernames = dispatch_group_create()
+			let waitForLoop = dispatch_group_create()
 
 			//For every key in the user's "follows" list, download the username associated to that key
 			for entry in snapshot.children {
@@ -154,13 +155,15 @@ class FirebaseHelper {
 
 				//Enter the dispatch group (A new download begins)
 				dispatch_group_enter(waitForUsernames)
-
+				dispatch_group_enter(waitForLoop)
+				
+				//Create the User object and populate it
+				let user = User()
+				user.key = userSnap.key
+				
 				//Acces the "allUsers" tree to get the username
 				Global.databaseRef?.child("allUsers").child(userSnap.key).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 
-					//Create the User object and populate it
-					let user = User()
-					user.key = userSnap.key
 					user.username = snapshot.value as! String
 
 					//Leave the dispatch group (Download has ended)
@@ -169,12 +172,16 @@ class FirebaseHelper {
 
 				//We block the thread here to make sure the username has finished downloading before we append the User object to the callback array
 				dispatch_group_notify(waitForUsernames, dispatch_get_main_queue()) {
+					//print("Add user \(user.key) to the follower array")
 					followUserKeys.append(user)
+					dispatch_group_leave(waitForLoop)
 				}
 			}
 
-			//Once we are all done, call the given callback
-			completionBlock(followUserKeys)
+			dispatch_group_notify(waitForUsernames, dispatch_get_main_queue()) {
+				//Once we are all done, call the given callback
+				completionBlock(followUserKeys)
+			}
 		}
 	}
 
@@ -182,12 +189,13 @@ class FirebaseHelper {
 	static func getUsersWhoFollow(userKey: String, completionBlock: ([User]) -> Void) {
 
 		//Get the keys from the users who follow the given user (userKey)
-		Global.databaseRef?.child("isFollowedBy").child(userKey).observeSingleEventType(.Value) { (snapshot: FIRDataSnapshot) in
+		Global.databaseRef?.child("isFollowedBy").child(userKey).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 			
 			var usersWhoFollowKeys: [User] = []
 
 			//We create a dispatch group in order to be able to wait for all the usernames to download (We store only the keys in the "isFollowedBy" tree)
 			let waitForUsernames = dispatch_group_create()
+			let waitForLoop = dispatch_group_create()
 
 			//For every key in the user's "isFollowedBy" list, download the username associated to that key
 			for entry in snapshot.children {
@@ -196,13 +204,15 @@ class FirebaseHelper {
 
 				//Enter the dispatch group (A new download begins)
 				dispatch_group_enter(waitForUsernames)
+				dispatch_group_enter(waitForLoop)
+
+				let user = User()
+				user.key = userSnap.key
 
 				//Acces the "allUsers" tree to get the username
 				Global.databaseRef?.child("allUsers").child(userSnap.key).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 
 					//Create the User object and populate it
-					let user = User()
-					user.key = userSnap.key
 					user.username = snapshot.value as! String
 
 					//Leave the dispatch group (Download has ended)
@@ -212,11 +222,14 @@ class FirebaseHelper {
 				//We block the thread here to make sure the username has finished downloading before we append the User object to the callback array
 				dispatch_group_notify(waitForUsernames, dispatch_get_main_queue()) {
 					usersWhoFollowKeys.append(user)
+					dispatch_group_leave(waitForLoop)
 				}
 			}
 
-			//Once we are all done, call the given callback
-			completionBlock(usersWhoFollowKeys)
+			dispatch_group_notify(waitForUsernames, dispatch_get_main_queue()) {
+				//Once we are all done, call the given callback
+				completionBlock(usersWhoFollowKeys)
+			}
 		}
 	}
 
@@ -291,7 +304,7 @@ class FirebaseHelper {
 	static func getAllLikesForPost(post: Post, completionBlock: ([String]) -> Void){
 
 		//Download all likes for the given post
-		Global.databaseRef?.child("likes").child(post.postKey).observeSingleEventType(.Value) { (snapshot: FIRDataSnapshot) in
+		Global.databaseRef?.child("likes").child(post.postKey).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 			
 			var users: [String] = []
 
@@ -308,7 +321,7 @@ class FirebaseHelper {
 				var username = ""
 
 				//Download the user with that key
-				Global.databaseRef?.child("allUsers").child(user.key).observeSingleEventType(.Value) { (snapshot: FIRDataSnapshot) in
+				Global.databaseRef?.child("allUsers").child(user.key).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 
 					//If it has a value associated, means it exists, so we need to set isValid to true
 					if snapshot.value != nil {
