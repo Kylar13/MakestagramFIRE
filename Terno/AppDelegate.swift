@@ -35,13 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			Global.storage = FIRStorage.storage()
 			Global.databaseRef = FIRDatabase.database().reference()
 			
-			try! FIRAuth.auth()?.signOut()
+			//try! FIRAuth.auth()?.signOut()
 			
 			//Go straight to the other tab bar controller
-//			let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//			
-//			self.window?.rootViewController = storyboard.instantiateViewControllerWithIdentifier("Timeline") as! UITabBarController
-//			self.window?.makeKeyAndVisible()
+			let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+			self.window?.rootViewController = storyboard.instantiateViewControllerWithIdentifier("Timeline") as! UITabBarController
+			self.window?.makeKeyAndVisible()
 		}
 		
 		return true

@@ -53,7 +53,7 @@ class SignUpViewController: UIViewController {
 								Global.email = user.email!
 								Global.uid = user.uid
 								Global.username = user.displayName!
-								print("User with email \(Global.email) logged in!")
+								//print("User with email \(Global.email) logged in!")
 								
 								Global.storage = FIRStorage.storage()
 								Global.databaseRef = FIRDatabase.database().reference()
@@ -65,7 +65,7 @@ class SignUpViewController: UIViewController {
 							}
 						}
 					}
-					//Give feedback
+					//TODO: If an error ocurred, give feedback to the user
 					self.usernameTextField.text = ""
 					self.emailTextField.text = ""
 					self.passwordTextField.text = ""

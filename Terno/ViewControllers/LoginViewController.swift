@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
 						Global.email = user.email!
 						Global.uid = user.uid
 						Global.username = user.displayName!
-						print("User with email \(Global.email) logged in!")
+						//print("User with email \(Global.email) logged in!")
 						
 						Global.storage = FIRStorage.storage()
 						Global.databaseRef = FIRDatabase.database().reference()
@@ -51,9 +51,9 @@ class LoginViewController: UIViewController {
 						self.performSegueWithIdentifier("loginSuccessful", sender: self)
 						
 					} else {
-						print("Unable to log in")
+						//print("Unable to log in")
 						
-						//Give some kind of feedback to user
+						//TODO: Give some kind of feedback to user
 						
 						//Clear text fields
 						self.emailTextField.text! = ""

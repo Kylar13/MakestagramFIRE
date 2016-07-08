@@ -51,24 +51,12 @@ class FriendSearchViewController: UIViewController {
 		
 		state = .DefaultMode
 		
-		// fill the cache of a user's followees
+		//Fill the cache of a user's followees
 		FirebaseHelper.getFollowedUsers(Global.uid) { (usernames: [User]) -> Void in
 			
 			self.followingUsers = usernames ?? []
 		}
 	}
-	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
     /*
     // MARK: - Navigation
@@ -95,8 +83,8 @@ extension FriendSearchViewController: UITableViewDataSource {
 		cell.user = user
 		
 		if let followingUsers = followingUsers {
-			// check if current user is already following displayed user
-			// change button appereance based on result
+
+			//Check if current user is already following displayed user in order to change the button appearance
 			cell.canFollow = true
 			
 			for item in followingUsers {
@@ -108,7 +96,6 @@ extension FriendSearchViewController: UITableViewDataSource {
 		}
 		
 		cell.delegate = self
-		
 		return cell
 	}
 }
