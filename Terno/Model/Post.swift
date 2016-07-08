@@ -11,6 +11,7 @@ import FirebaseStorage
 import FirebaseDatabase
 import Bond
 import Darwin
+import ConvenienceKit
 
 class Post: NSObject {
 	
@@ -21,6 +22,16 @@ class Post: NSObject {
 	var postKey: String = ""
 	var imageData: Observable<UIImage?> = Observable(nil)
 	var likes: Observable<[String]?> = Observable(nil)
+	
+	static var imageCache: NSCacheSwift<String, UIImage>!
+	
+	override class func initialize() {
+		var onceToken : dispatch_once_t = 0;
+		dispatch_once(&onceToken) {
+			// 1
+			Post.imageCache = NSCacheSwift<String, UIImage>()
+		}
+	}
 	
 	
 	static func uploadPhoto(imageData: NSData) {
@@ -65,12 +76,17 @@ class Post: NSObject {
 	}
 	
 	func downloadImage(path: String) {
+		
+		imageData.value = Post.imageCache[self.postKey]
+		
 		if imageData.value == nil {
 			
 			Global.storage!.referenceWithPath(path).dataWithMaxSize(INT64_MAX) { (data, error) in
 				if let data = data{
 					print("Image Downloaded")
 					self.imageData.value = UIImage(data: data, scale: 1.0)
+					
+					Post.imageCache[self.postKey] = self.imageData.value
 				}
 			}
 		}

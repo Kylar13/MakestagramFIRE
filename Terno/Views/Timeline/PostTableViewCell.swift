@@ -8,6 +8,7 @@
 
 import UIKit
 import Bond
+import DateTools
 
 class PostTableViewCell: UITableViewCell {
 
@@ -16,6 +17,10 @@ class PostTableViewCell: UITableViewCell {
 	@IBOutlet weak var likesLabel: UILabel!
 	@IBOutlet weak var likeButton: UIButton!
 	@IBOutlet weak var moreButton: UIButton!
+	
+	@IBOutlet weak var postTimeLabel: UILabel!
+	@IBOutlet weak var usernameLabel: UILabel!
+	
 	
 	var postDisposable: DisposableType?
 	var likeDisposable: DisposableType?
@@ -26,7 +31,16 @@ class PostTableViewCell: UITableViewCell {
 			postDisposable?.dispose()
 			likeDisposable?.dispose()
 			
+			if let oldValue = oldValue where oldValue != post {
+				// 2
+				oldValue.imageData.value = nil
+			}
+			
 			if let post = post {
+				
+				usernameLabel.text = post.authorUsername
+				let date = NSDate(timeIntervalSince1970: 0-post.timestamp)
+				postTimeLabel.text = date.shortTimeAgoSinceDate(NSDate())
 				
 				postDisposable = post.imageData.bindTo(postImageView.bnd_image)
 				likeDisposable = post.likes.observe { (value: [String]?) -> () in

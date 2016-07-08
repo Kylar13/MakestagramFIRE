@@ -11,7 +11,9 @@ target 'Terno' do
   pod 'FirebaseAuth’
   pod 'FirebaseDatabase’
   pod 'IQKeyboardManagerSwift'
+  pod ‘ConvenienceKit’
   pod 'Firebase/Storage'
+  pod ‘DateTools’
 
   target 'TernoTests' do
     inherit! :search_paths
