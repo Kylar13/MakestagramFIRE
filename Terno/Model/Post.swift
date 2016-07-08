@@ -120,6 +120,7 @@ class Post: NSObject {
 		//Download the likes and store them
 		FirebaseHelper.getAllLikesForPost(self) { (usernames) in
 			
+			//print("We got \(usernames.count) likes for post \(self.postKey)")
 			self.likes.value = usernames
 		}
 	}

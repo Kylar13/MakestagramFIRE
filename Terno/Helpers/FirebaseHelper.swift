@@ -310,6 +310,7 @@ class FirebaseHelper {
 
 			//This dispatch group is to make sure the user who liked the post is still valid
 			let isUserValid = dispatch_group_create()
+			let waitForAllLikes = dispatch_group_create()
 			
 			for like in snapshot.children {
 				
@@ -317,9 +318,11 @@ class FirebaseHelper {
 
 				//Enter the dispath group and set isValid to false
 				dispatch_group_enter(isUserValid)
+				dispatch_group_enter(waitForAllLikes)
 				var isValid = false
 				var username = ""
-
+				
+				
 				//Download the user with that key
 				Global.databaseRef?.child("allUsers").child(user.key).observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
 
@@ -340,11 +343,14 @@ class FirebaseHelper {
 						//If isValid is true, then username holds the user's username
 						users.append(username)
 					}
+					dispatch_group_leave(waitForAllLikes)
 				}
 			}
 
-			//Call the given callback passing the array of usernames as an argument
-			completionBlock(users)
+			dispatch_group_notify(waitForAllLikes, dispatch_get_main_queue()) {
+				
+				completionBlock(users)
+			}
 		}
 	}
 
@@ -376,6 +382,8 @@ class FirebaseHelper {
 	}
 
 	// Searches the database to find any users who match with the given string
+	
+	//TODO: Optimize the shit out of this method
 	static func searchUsers(search: String, completionBlock: ([User]) -> Void){
 		
 		var matches: [User] = []
