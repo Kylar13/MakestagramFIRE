@@ -20,6 +20,12 @@
 		3252917A1D2448330010BC62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 325291791D2448330010BC62 /* GoogleService-Info.plist */; };
 		3252917C1D244D640010BC62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3252917B1D244D640010BC62 /* Assets.xcassets */; };
 		3252917F1D244F090010BC62 /* FriendSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3252917E1D244F090010BC62 /* FriendSearchViewController.swift */; };
+		327F0A771D2EED110034B061 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F0A761D2EED110034B061 /* LoginViewController.swift */; };
+		327F0A791D2EFE210034B061 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F0A781D2EFE210034B061 /* SignUpViewController.swift */; };
+		327F0A7C1D2F1F300034B061 /* FriendsSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F0A7B1D2F1F300034B061 /* FriendsSearchTableViewCell.swift */; };
+		327F0A7E1D2F2EDE0034B061 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F0A7D1D2F2EDE0034B061 /* User.swift */; };
+		32DD2C661D27164B00D47428 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD2C651D27164B00D47428 /* PostTableViewCell.swift */; };
+		32DD2C691D272D1C00D47428 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD2C681D272D1C00D47428 /* FirebaseHelper.swift */; };
 		A21FE5243210C9C9F311802D /* Pods_Terno.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A14152D6857E0EDBFC01A9E5 /* Pods_Terno.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +57,12 @@
 		325291791D2448330010BC62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3252917B1D244D640010BC62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3252917E1D244F090010BC62 /* FriendSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSearchViewController.swift; sourceTree = "<group>"; };
+		327F0A761D2EED110034B061 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		327F0A781D2EFE210034B061 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		327F0A7B1D2F1F300034B061 /* FriendsSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsSearchTableViewCell.swift; sourceTree = "<group>"; };
+		327F0A7D1D2F2EDE0034B061 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		32DD2C651D27164B00D47428 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		32DD2C681D272D1C00D47428 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		5886585489B424BAC0C5C48D /* Pods-Terno.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Terno.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Terno/Pods-Terno.debug.xcconfig"; sourceTree = "<group>"; };
 		6F3313172835AD578D4F0293 /* Pods_TernoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TernoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84350D7643755AC3D87EA84D /* Pods-TernoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TernoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TernoTests/Pods-TernoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				321EAF1D1D246D9400052763 /* Post.swift */,
+				327F0A7D1D2F2EDE0034B061 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -117,6 +130,8 @@
 		32478C1F1D243860006F6BF9 /* Terno */ = {
 			isa = PBXGroup;
 			children = (
+				32DD2C671D272D0D00D47428 /* Helpers */,
+				32DD2C631D27162900D47428 /* Views */,
 				321EAF1C1D246D7E00052763 /* Model */,
 				321EAF191D245BF500052763 /* PhotoTaking */,
 				3252917D1D244E750010BC62 /* ViewControllers */,
@@ -146,8 +161,43 @@
 				32478C221D243860006F6BF9 /* TimelineViewController.swift */,
 				32478C241D243860006F6BF9 /* PhotoViewController.swift */,
 				3252917E1D244F090010BC62 /* FriendSearchViewController.swift */,
+				327F0A761D2EED110034B061 /* LoginViewController.swift */,
+				327F0A781D2EFE210034B061 /* SignUpViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		327F0A7A1D2F1F1A0034B061 /* FriendsSearch */ = {
+			isa = PBXGroup;
+			children = (
+				327F0A7B1D2F1F300034B061 /* FriendsSearchTableViewCell.swift */,
+			);
+			path = FriendsSearch;
+			sourceTree = "<group>";
+		};
+		32DD2C631D27162900D47428 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				327F0A7A1D2F1F1A0034B061 /* FriendsSearch */,
+				32DD2C641D27162900D47428 /* Timeline */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		32DD2C641D27162900D47428 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				32DD2C651D27164B00D47428 /* PostTableViewCell.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
+		32DD2C671D272D0D00D47428 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				32DD2C681D272D1C00D47428 /* FirebaseHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		47923BD478E6002EC19E3624 /* Pods */ = {
@@ -226,6 +276,7 @@
 				TargetAttributes = {
 					32478C1C1D243860006F6BF9 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = STH9YDCAP3;
 					};
 					32478C321D243861006F6BF9 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -371,12 +422,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				327F0A7E1D2F2EDE0034B061 /* User.swift in Sources */,
+				327F0A791D2EFE210034B061 /* SignUpViewController.swift in Sources */,
 				321EAF1B1D245C2000052763 /* PhotoTakingHelper.swift in Sources */,
 				325291761D2440890010BC62 /* Global.swift in Sources */,
 				3252917F1D244F090010BC62 /* FriendSearchViewController.swift in Sources */,
+				32DD2C661D27164B00D47428 /* PostTableViewCell.swift in Sources */,
+				32DD2C691D272D1C00D47428 /* FirebaseHelper.swift in Sources */,
 				32478C251D243860006F6BF9 /* PhotoViewController.swift in Sources */,
 				32478C211D243860006F6BF9 /* AppDelegate.swift in Sources */,
 				321EAF1E1D246D9400052763 /* Post.swift in Sources */,
+				327F0A771D2EED110034B061 /* LoginViewController.swift in Sources */,
+				327F0A7C1D2F1F300034B061 /* FriendsSearchTableViewCell.swift in Sources */,
 				32478C231D243860006F6BF9 /* TimelineViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,10 +564,13 @@
 			baseConfigurationReference = 5886585489B424BAC0C5C48D /* Pods-Terno.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Terno/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flatmates.Terno;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -519,10 +579,13 @@
 			baseConfigurationReference = 2FCF6BAE34B57961485FBAAA /* Pods-Terno.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Terno/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flatmates.Terno;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
