@@ -22,7 +22,7 @@ class Global {
 	
 	static var startQuery: Double = 0
 	
-	static var timelinePosts: [Post] = []
+	static var searchArray: [User] = []
 	
 	static func isValidEmail(testStr:String) -> Bool {
 		// print("validate calendar: \(testStr)")

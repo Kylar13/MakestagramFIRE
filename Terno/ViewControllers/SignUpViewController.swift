@@ -65,7 +65,9 @@ class SignUpViewController: UIViewController {
 							}
 						}
 					}
-					//TODO: If an error ocurred, give feedback to the user
+					
+					//TODO: If an error ocurred, give feedback to the user --> Toasts?
+					
 					self.usernameTextField.text = ""
 					self.emailTextField.text = ""
 					self.passwordTextField.text = ""

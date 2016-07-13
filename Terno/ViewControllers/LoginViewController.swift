@@ -53,8 +53,7 @@ class LoginViewController: UIViewController {
 					} else {
 						//print("Unable to log in")
 						
-						//TODO: Give some kind of feedback to user
-						
+						//TODO: Give some kind of feedback to user --> Toasts?
 						//Clear text fields
 						self.emailTextField.text! = ""
 						self.passwordTextField.text! = ""

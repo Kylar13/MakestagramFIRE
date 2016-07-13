@@ -93,6 +93,7 @@ extension TimelineViewController: UITableViewDataSource {
 		
 		if indexPath.row == posts.count - 1 {
 			
+			
 			FirebaseHelper.timelineQuery() { (timelinePosts: [Post]) in
 				
 				let aux = self.posts.count

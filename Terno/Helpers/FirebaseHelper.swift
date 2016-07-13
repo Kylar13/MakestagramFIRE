@@ -383,29 +383,45 @@ class FirebaseHelper {
 
 	// Searches the database to find any users who match with the given string
 	
-	//TODO: Optimize the shit out of this method
+	//TODO: More optimizing still left to do --> Check out search frameworks for Firebase
 	static func searchUsers(search: String, completionBlock: ([User]) -> Void){
 		
 		var matches: [User] = []
+		
+		if Global.searchArray.count == 0 {
 
-		//We perform the search in the "search" tree because it has all usernames stored in lowercase
-		Global.databaseRef?.child("search").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
-			
-			for entry in snapshot.children {
-				let userSnap = entry as! FIRDataSnapshot
-
-				//For every entry, if the username contains the search string, add it to the array
-				if (userSnap.value as! String).containsString(search) {
-
-					//Populate the User object and store it in the array
+			//We perform the search in the "search" tree because it has all usernames stored in lowercase
+			Global.databaseRef?.child("search").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
+				
+				for entry in snapshot.children {
+					let userSnap = entry as! FIRDataSnapshot
+					
 					let user = User()
 					user.key = userSnap.key
 					user.username = userSnap.value as! String
+					
+					Global.searchArray.append(user)
 
+					//For every entry, if the username contains the search string, add it to the array
+					if (userSnap.value as! String).containsString(search) {
+
+						matches.append(user)
+					}
+				}
+					
+				completionBlock(matches)
+			}
+		}
+		else{
+			
+			for user in Global.searchArray {
+				
+				if user.username.containsString(search) {
+					
 					matches.append(user)
 				}
 			}
-				
+			
 			completionBlock(matches)
 		}
 		

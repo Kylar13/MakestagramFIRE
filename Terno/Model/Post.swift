@@ -43,46 +43,57 @@ class Post: NSObject {
 		//Save the key for the post
 		let key = Global.databaseRef!.child("posts").childByAutoId().key
 
+		let waitForStorageKey = dispatch_group_create()
+		dispatch_group_enter(waitForStorageKey)
 		//Create a reference to our storage reference
-		//TODO: Store the reference in the database so it's not public...
-		let storageRef = Global.storage!.referenceForURL("gs://project-9055015523885650113.appspot.com")
+		var storeKey = ""
 
-		//We store the images inside a folder structure -> images/<ownerKey>/<postKey>
-		let imageRef = storageRef.child("/images/\(Global.uid)/\(key).jpg")
+		Global.databaseRef?.child("storageKey").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
+			storeKey = snapshot.value as! String
+			dispatch_group_leave(waitForStorageKey)
+		}
+		
+		dispatch_group_notify(waitForStorageKey, dispatch_get_main_queue()) {
+			print(storeKey)
+			let storageRef = Global.storage!.referenceForURL(storeKey)
 
-		//Store the image in the reference we just created
-		imageRef.putData(imageData, metadata: nil) { (metadata, error) in
-			
-			if let error = error {
-				//If error, print for debugging
-				//print(error.localizedDescription)
-			}
+			//We store the images inside a folder structure -> images/<ownerKey>/<postKey>
+			let imageRef = storageRef.child("/images/\(Global.uid)/\(key).jpg")
 
-			//Inversed timestamp for reasons mentioned earlier
-			let time = 0 - NSDate().timeIntervalSince1970
-
-			//Create the dictionary with all of our post's data
-			let post = ["uid": Global.uid,
-						"author": Global.username,
-						"imagePath": imageRef.fullPath,
-						"timestamp": time
-						]
-
-			//Create an "update dictionary" so all the updates are done atomically
-			var childUpdates = ["/posts/\(key)": post,
-			"/users/\(Global.uid)/posts/\(key)": time,
-			"/timeline/\(Global.uid)/\(key)": time]
-
-			//We download all users who follow our user and add the post to their timelines
-			FirebaseHelper.getUsersWhoFollow(Global.uid) { (users: [User]) in
+			//Store the image in the reference we just created
+			imageRef.putData(imageData, metadata: nil) { (metadata, error) in
 				
-				for user in users {
-					//Again, using the update dictionary so it's atomic
-					childUpdates["/timeline/\(user.key)/\(key)"] = time
+				if let error = error {
+					//If error, print for debugging
+					print(error.localizedDescription)
 				}
 
-				//Update everything in our dictionary. This method allows the updates to be atomic, which means either all of them succeed or no updates happen
-				Global.databaseRef!.updateChildValues(childUpdates)
+				//Inversed timestamp for reasons mentioned earlier
+				let time = 0 - NSDate().timeIntervalSince1970
+
+				//Create the dictionary with all of our post's data
+				let post = ["uid": Global.uid,
+							"author": Global.username,
+							"imagePath": imageRef.fullPath,
+							"timestamp": time
+							]
+
+				//Create an "update dictionary" so all the updates are done atomically
+				var childUpdates = ["/posts/\(key)": post,
+				"/users/\(Global.uid)/posts/\(key)": time,
+				"/timeline/\(Global.uid)/\(key)": time]
+
+				//We download all users who follow our user and add the post to their timelines
+				FirebaseHelper.getUsersWhoFollow(Global.uid) { (users: [User]) in
+					
+					for user in users {
+						//Again, using the update dictionary so it's atomic
+						childUpdates["/timeline/\(user.key)/\(key)"] = time
+					}
+
+					//Update everything in our dictionary. This method allows the updates to be atomic, which means either all of them succeed or no updates happen
+					Global.databaseRef!.updateChildValues(childUpdates)
+				}
 			}
 		}
 	}
