@@ -17,6 +17,9 @@ target 'Terno' do
   pod 'Firebase/Storage'
   pod 'DateTools'
   pod 'Alamofire', '~> 3.4'
+  pod 'Fabric'
+  pod 'Crashlytics'
+  pod 'Bolts-Swift'
 
   target 'TernoTests' do
     inherit! :search_paths

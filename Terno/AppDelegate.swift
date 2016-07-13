@@ -12,6 +12,9 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
 import IQKeyboardManagerSwift
+import Fabric
+import Crashlytics
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Override point for customization after application launch.
 		
 		FIRApp.configure()
+		Fabric.with([Answers.self, Crashlytics.self])
+		
 		IQKeyboardManager.sharedManager().enable = true
 		
 		
