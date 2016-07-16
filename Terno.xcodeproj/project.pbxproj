@@ -26,6 +26,7 @@
 		327F0A7E1D2F2EDE0034B061 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F0A7D1D2F2EDE0034B061 /* User.swift */; };
 		32DD2C661D27164B00D47428 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD2C651D27164B00D47428 /* PostTableViewCell.swift */; };
 		32DD2C691D272D1C00D47428 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD2C681D272D1C00D47428 /* FirebaseHelper.swift */; };
+		32DEFA611D3958FB00533669 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DEFA601D3958FB00533669 /* ProfileViewController.swift */; };
 		A21FE5243210C9C9F311802D /* Pods_Terno.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A14152D6857E0EDBFC01A9E5 /* Pods_Terno.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		327F0A7D1D2F2EDE0034B061 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		32DD2C651D27164B00D47428 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		32DD2C681D272D1C00D47428 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		32DEFA601D3958FB00533669 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		32E6A3891D301E0A00CFEA87 /* Terno-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Terno-Bridging-Header.h"; sourceTree = "<group>"; };
 		5886585489B424BAC0C5C48D /* Pods-Terno.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Terno.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Terno/Pods-Terno.debug.xcconfig"; sourceTree = "<group>"; };
 		6F3313172835AD578D4F0293 /* Pods_TernoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TernoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +167,7 @@
 				3252917E1D244F090010BC62 /* FriendSearchViewController.swift */,
 				327F0A761D2EED110034B061 /* LoginViewController.swift */,
 				327F0A781D2EFE210034B061 /* SignUpViewController.swift */,
+				32DEFA601D3958FB00533669 /* ProfileViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				327F0A791D2EFE210034B061 /* SignUpViewController.swift in Sources */,
 				321EAF1B1D245C2000052763 /* PhotoTakingHelper.swift in Sources */,
 				325291761D2440890010BC62 /* Global.swift in Sources */,
+				32DEFA611D3958FB00533669 /* ProfileViewController.swift in Sources */,
 				3252917F1D244F090010BC62 /* FriendSearchViewController.swift in Sources */,
 				32DD2C661D27164B00D47428 /* PostTableViewCell.swift in Sources */,
 				32DD2C691D272D1C00D47428 /* FirebaseHelper.swift in Sources */,

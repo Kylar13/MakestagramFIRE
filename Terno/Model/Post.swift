@@ -54,7 +54,7 @@ class Post: NSObject {
 		}
 		
 		dispatch_group_notify(waitForStorageKey, dispatch_get_main_queue()) {
-			print(storeKey)
+
 			let storageRef = Global.storage!.referenceForURL(storeKey)
 
 			//We store the images inside a folder structure -> images/<ownerKey>/<postKey>

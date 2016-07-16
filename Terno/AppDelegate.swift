@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		
 		//TODO: Add a logout button
-		//try! FIRAuth.auth()?.signOut()
+		try! FIRAuth.auth()?.signOut()
 
 		
 		if let user = FIRAuth.auth()?.currentUser {

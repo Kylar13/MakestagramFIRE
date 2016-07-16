@@ -22,10 +22,16 @@ class TimelineViewController: UIViewController {
 	
 	@IBOutlet weak var tableView: UITableView!
 	
+	var refreshControl: UIRefreshControl!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		self.tabBarController?.delegate = self
+		
+		refreshControl = UIRefreshControl()
+		refreshControl.addTarget(self, action: #selector(TimelineViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+		tableView.addSubview(refreshControl)
 	}
 	
 	override func viewDidAppear(animated: Bool) {
@@ -40,6 +46,18 @@ class TimelineViewController: UIViewController {
 			self.tableView.reloadData()
 		}
 	
+	}
+	
+	func refresh(sender: AnyObject) {
+		// Code to refresh table view
+		Global.startQuery = -DBL_MAX
+		
+		FirebaseHelper.timelineQuery() { (timelinePosts: [Post]) in
+			
+			self.posts = timelinePosts
+			self.tableView.reloadData()
+			self.refreshControl.endRefreshing()
+		}
 	}
 	
 	func takePhoto() {
