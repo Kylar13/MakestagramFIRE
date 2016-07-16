@@ -98,8 +98,11 @@ extension TimelineViewController: UITableViewDataSource {
 		// 2
 		let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
 		
-		self.posts[indexPath.row].downloadImage(self.posts[indexPath.row].imagePath)
-		self.posts[indexPath.row].fetchLikes()
+		if indexPath.row == 0 {
+			
+			self.posts[indexPath.row].downloadImage(self.posts[indexPath.row].imagePath)
+			self.posts[indexPath.row].fetchLikes()
+		}
 		
 		if indexPath.row < posts.count - 1 {
 			

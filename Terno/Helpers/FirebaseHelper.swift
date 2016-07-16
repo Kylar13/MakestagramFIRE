@@ -386,45 +386,78 @@ class FirebaseHelper {
 	//TODO: More optimizing still left to do --> Check out search frameworks for Firebase
 	static func searchUsers(search: String, completionBlock: ([User]) -> Void){
 		
+		//Kill last search if still in process
+		Global.databaseRef?.child("search").removeAllObservers()
+		
 		var matches: [User] = []
-		
-		if Global.searchArray.count == 0 {
-
-			//We perform the search in the "search" tree because it has all usernames stored in lowercase
-			Global.databaseRef?.child("search").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot) in
+		var auxSearch = search
+		var removedChars = ""
+		//var searchAux = search
+		if !auxSearch.isEmpty {
+			print("Entering search")
+			
+			
+			var lastChar = auxSearch.characters.last!
+			//print("\(lastChar)")
+			
+			while lastChar == "z".characters.first! && auxSearch.characters.count > 1 {
+				removedChars.append(lastChar)
+				auxSearch.removeAtIndex(auxSearch.endIndex.predecessor())
+				lastChar = auxSearch.characters.last!
+			}
+			
+			if auxSearch.characters.count > 1 && lastChar != "z".characters.first! {
+				//We got the char we have to modify, the sting containing it at the end, and all the chars we have to append to reform the original string
+				auxSearch.removeAtIndex(auxSearch.endIndex.predecessor())
+				let lastIndex = Global.alphabet.characters.indexOf(lastChar)
+				auxSearch.append(Global.alphabet[(lastIndex?.successor())!])
+				auxSearch += removedChars
 				
-				for entry in snapshot.children {
-					let userSnap = entry as! FIRDataSnapshot
+				print("Searching from \(search) to \(auxSearch)")
+				//We perform the search in the "search" tree because it has all usernames stored in lowercase
+				Global.databaseRef?.child("search").queryOrderedByValue().queryStartingAtValue(search).queryEndingAtValue(auxSearch).observeEventType(.Value) { (snapshot: FIRDataSnapshot) in
 					
-					let user = User()
-					user.key = userSnap.key
-					user.username = userSnap.value as! String
-					
-					Global.searchArray.append(user)
-
-					//For every entry, if the username contains the search string, add it to the array
-					if (userSnap.value as! String).containsString(search) {
-
+					print("There's \(snapshot.childrenCount) total users")
+					for entry in snapshot.children {
+						let userSnap = entry as! FIRDataSnapshot
+						
+						let user = User()
+						user.key = userSnap.key
+						user.username = userSnap.value as! String
+						
 						matches.append(user)
+						
 					}
-				}
 					
-				completionBlock(matches)
-			}
-		}
-		else{
-			
-			for user in Global.searchArray {
-				
-				if user.username.containsString(search) {
-					
-					matches.append(user)
+					print("Calling callback!!")
+					Global.databaseRef?.child("search").removeAllObservers()
+					completionBlock(matches)
 				}
 			}
+			else{
+				//They typed all z, so dont put an end on the query
+				//We perform the search in the "search" tree because it has all usernames stored in lowercase
+				Global.databaseRef?.child("search").queryOrderedByValue().queryStartingAtValue(auxSearch).observeEventType(.Value) { (snapshot: FIRDataSnapshot) in
+					
+					print("There's \(snapshot.childrenCount) total users")
+					for entry in snapshot.children {
+						let userSnap = entry as! FIRDataSnapshot
+						
+						let user = User()
+						user.key = userSnap.key
+						user.username = userSnap.value as! String
+						
+						matches.append(user)
+
+					}
+					
+					print("Calling callback!!")
+					Global.databaseRef?.child("search").removeAllObservers()
+					completionBlock(matches)
+				}
+			}
 			
-			completionBlock(matches)
 		}
-		
 		
 	}
 	

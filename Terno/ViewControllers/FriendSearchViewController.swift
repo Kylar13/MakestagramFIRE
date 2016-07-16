@@ -35,13 +35,17 @@ class FriendSearchViewController: UIViewController {
 				
 			case .SearchMode:
 				let searchText = searchBar?.text ?? ""
-				FirebaseHelper.searchUsers(searchText, completionBlock: updateList)
+				
+				let queryText = searchText.lowercaseString
+				
+				FirebaseHelper.searchUsers(queryText, completionBlock: updateList)
 			}
 		}
 	}
 	
 	func updateList(results: [User]) {
 		self.users = results
+		//print("This search returned \(results.count)")
 		self.tableView.reloadData()
 		
 	}
