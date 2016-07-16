@@ -60,6 +60,9 @@ class FriendSearchViewController: UIViewController {
 			
 			self.followingUsers = usernames ?? []
 		}
+		
+		searchBar.layer.cornerRadius = 6
+		searchBar.clipsToBounds = true
 	}
 
     /*

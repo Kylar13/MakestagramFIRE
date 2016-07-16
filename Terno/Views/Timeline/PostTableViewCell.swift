@@ -19,8 +19,7 @@ class PostTableViewCell: UITableViewCell {
 	@IBOutlet weak var moreButton: UIButton!
 	
 	@IBOutlet weak var postTimeLabel: UILabel!
-	@IBOutlet weak var usernameLabel: UILabel!
-	
+	@IBOutlet weak var usernameLabelButton: UIButton!
 	
 	var postDisposable: DisposableType?
 	var likeDisposable: DisposableType?
@@ -38,7 +37,9 @@ class PostTableViewCell: UITableViewCell {
 			
 			if let post = post {
 				
-				usernameLabel.text = post.authorUsername
+				usernameLabelButton.setTitle(post.authorUsername, forState: .Normal)
+				usernameLabelButton.setTitle(post.authorKey, forState: .Disabled)
+				
 				let date = NSDate(timeIntervalSince1970: 0-post.timestamp)
 				postTimeLabel.text = date.shortTimeAgoSinceDate(NSDate())
 				
@@ -82,5 +83,5 @@ class PostTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+	
 }

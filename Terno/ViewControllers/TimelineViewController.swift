@@ -128,6 +128,32 @@ extension TimelineViewController: UITableViewDataSource {
 		
 		return cell
 	}
+	
+	
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		// 1
+		
+		print("Segue tapped")
+		if let identifier = segue.identifier {
+			// 2
+			if identifier == "showProfile" {
+				
+				// 2
+				let author = sender as! UIButton
+				//let authorUsername = author.titleLabel?.text!
+				let authorKey = author.titleForState(.Disabled)!
+				
+				//print("Author was \(authorUsername) with key \(authorKey)")
+				// 3
+				let profileViewController = segue.destinationViewController as! ProfileViewController
+				// 4
+				profileViewController.userKey = authorKey
+				
+				
+			}
+		}
+	}
 }
 
 

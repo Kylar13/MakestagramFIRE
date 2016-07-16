@@ -11,6 +11,7 @@ import UIKit
 class ProfileViewController: UIViewController {
 	
 	var posts: [Post] = []
+	var userKey: String?
 
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -22,11 +23,21 @@ class ProfileViewController: UIViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 
-		FirebaseHelper.getPostsByUser(Global.uid) { (userPosts: [Post]) in
-			
-			//print("Hey there!! We had \(userPosts.count) posts!!!")
-			self.posts = userPosts
-			self.tableView.reloadData()
+		if let userKey = userKey {
+			FirebaseHelper.getPostsByUser(userKey) { (userPosts: [Post]) in
+				
+				//print("Hey there!! We had \(userPosts.count) posts!!!")
+				self.posts = userPosts
+				self.tableView.reloadData()
+			}
+		}
+		else{
+			FirebaseHelper.getPostsByUser(Global.uid) { (userPosts: [Post]) in
+				
+				//print("Hey there!! We had \(userPosts.count) posts!!!")
+				self.posts = userPosts
+				self.tableView.reloadData()
+			}
 		}
 		
 	}
