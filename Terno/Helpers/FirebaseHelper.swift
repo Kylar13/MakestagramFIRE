@@ -394,7 +394,7 @@ class FirebaseHelper {
 		var removedChars = ""
 		//var searchAux = search
 		if !auxSearch.isEmpty {
-			print("Entering search")
+			//print("Entering search, the string is (\(search))")
 			
 			
 			var lastChar = auxSearch.characters.last!
@@ -413,11 +413,11 @@ class FirebaseHelper {
 				auxSearch.append(Global.alphabet[(lastIndex?.successor())!])
 				auxSearch += removedChars
 				
-				print("Searching from \(search) to \(auxSearch)")
+				//print("Searching from \(search) to \(auxSearch)")
 				//We perform the search in the "search" tree because it has all usernames stored in lowercase
 				Global.databaseRef?.child("search").queryOrderedByValue().queryStartingAtValue(search).queryEndingAtValue(auxSearch).observeEventType(.Value) { (snapshot: FIRDataSnapshot) in
 					
-					print("There's \(snapshot.childrenCount) total users")
+					//print("There's \(snapshot.childrenCount) total users")
 					for entry in snapshot.children {
 						let userSnap = entry as! FIRDataSnapshot
 						
@@ -425,11 +425,13 @@ class FirebaseHelper {
 						user.key = userSnap.key
 						user.username = userSnap.value as! String
 						
-						matches.append(user)
+						if !user.username.hasPrefix(auxSearch){
+							matches.append(user)
+						}
 						
 					}
 					
-					print("Calling callback!!")
+					//print("Calling callback!!")
 					Global.databaseRef?.child("search").removeAllObservers()
 					completionBlock(matches)
 				}
@@ -439,19 +441,17 @@ class FirebaseHelper {
 				//We perform the search in the "search" tree because it has all usernames stored in lowercase
 				Global.databaseRef?.child("search").queryOrderedByValue().queryStartingAtValue(auxSearch).observeEventType(.Value) { (snapshot: FIRDataSnapshot) in
 					
-					print("There's \(snapshot.childrenCount) total users")
+					//print("There's \(snapshot.childrenCount) total users")
 					for entry in snapshot.children {
 						let userSnap = entry as! FIRDataSnapshot
 						
 						let user = User()
 						user.key = userSnap.key
 						user.username = userSnap.value as! String
-						
-						matches.append(user)
 
 					}
 					
-					print("Calling callback!!")
+					//print("Calling callback!!")
 					Global.databaseRef?.child("search").removeAllObservers()
 					completionBlock(matches)
 				}

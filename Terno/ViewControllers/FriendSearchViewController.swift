@@ -36,9 +36,7 @@ class FriendSearchViewController: UIViewController {
 			case .SearchMode:
 				let searchText = searchBar?.text ?? ""
 				
-				let queryText = searchText.lowercaseString
-				
-				FirebaseHelper.searchUsers(queryText, completionBlock: updateList)
+				FirebaseHelper.searchUsers(searchText.lowercaseString, completionBlock: updateList)
 			}
 		}
 	}
@@ -124,7 +122,7 @@ extension FriendSearchViewController: UISearchBarDelegate {
 	}
 	
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		FirebaseHelper.searchUsers(searchText, completionBlock: updateList)
+		FirebaseHelper.searchUsers(searchText.lowercaseString, completionBlock: updateList)
 	}
 	
 }
