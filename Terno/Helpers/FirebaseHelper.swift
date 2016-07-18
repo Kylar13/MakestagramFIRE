@@ -382,8 +382,6 @@ class FirebaseHelper {
 	}
 
 	// Searches the database to find any users who match with the given string
-	
-	//TODO: More optimizing still left to do --> Check out search frameworks for Firebase
 	static func searchUsers(search: String, completionBlock: ([User]) -> Void){
 		
 		//Kill last search if still in process
@@ -423,6 +421,8 @@ class FirebaseHelper {
 						
 						let user = User()
 						user.key = userSnap.key
+						
+						//TODO: Get the actual username and not the lowercase one
 						user.username = userSnap.value as! String
 						
 						if !user.username.hasPrefix(auxSearch){
